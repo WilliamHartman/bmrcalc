@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import './Navbar.css';
 import Drawer from 'material-ui/Drawer';
-import MDMenu from 'react-icons/lib/md/menu.js';
-import MDSearch from 'react-icons/lib/md/search.js';
+import { MdMenu } from 'react-icons/md/index.js';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {  } from './../../redux/reducer';
 import { withRouter } from 'react-router';
-import logo from './relativepaylogo.png';
 
 
 class Navbar extends Component {
@@ -53,14 +51,13 @@ class Navbar extends Component {
             <div className='navbar-main'>
                 <div className='navbar-top'>
                     <div className='navbar-top-left'>
-                        <Link to='/' className='link'><img src={logo} alt="logo" className='logo'/></Link>
-                        <Link to='/' className='link'><h1 className='navbar-title'>relative<span className='gold-text'>pay</span></h1></Link>
+                        <Link to='/' className='link'><h1 className='navbar-title'>BMR Calc</h1></Link>
                     </div>
                     <div className='navbar-top-right'>
                         <div className='mobile-menu'>
-                            <MDMenu
-                                size={35}
-                                color='#85bb65'                         
+                            <MdMenu
+                                size={45}
+                                color='#ffffffe7'                         
                                 onClick={this.handleToggle}
                             />
                             <Drawer
@@ -79,22 +76,6 @@ class Navbar extends Component {
                             <Link to='/' className='link'><div className='navbar-menu-home'>Home</div></Link>
                             <Link to='/about' className='link'><div className='navbar-menu-about'>About</div></Link>
                         </div>
-                    </div>
-                </div>
-                <div className='navbar-bottom'>
-                    <div className='navbar-search-container'>
-                        <Link to='/results' className='link'>                        
-                            <div onClick={this.handleSearchClick}>
-                                <MDSearch 
-                                size={30}/>
-                            </div>
-                        </Link>
-                        <input 
-                        onClick={this.searchBoxClick.bind(this)}
-                        onChange={e => this.updateSearchTerm(e)}
-                        onKeyDown={e => this.checkEnter(e)}
-                        value={this.state.searchTerm}
-                        placeholder='Search jobs'/>
                     </div>
                 </div>
             </div>

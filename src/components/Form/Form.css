@@ -1,0 +1,11 @@
+.Form {
+    height: 300px;
+    width: calc(100% - 2px);
+    border: 1px solid black;
+}
+
+.form-field {
+    height: 60px;
+    width: 100%;
+    
+}
