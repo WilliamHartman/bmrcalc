@@ -1,5 +1,5 @@
 .Form {
-    height: 420px;
+    height: 490px;
     width: calc(100% - 2px);
     border: 1px solid black;
 }
@@ -13,7 +13,7 @@
 
 .form-field-title {
     height: 35px;
-    width: 115px;
+    width: 100%;
     font-size: 15px;
     font-weight: 600;
     display: flex;

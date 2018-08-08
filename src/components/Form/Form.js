@@ -6,11 +6,15 @@ import { withRouter } from 'react-router';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+//https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4428382/
 
 class Form extends Component {
     constructor(){
@@ -19,16 +23,21 @@ class Form extends Component {
       this.state = {
         units: 'imperial',
         gender: 'female',
-        weight: null,
-        height: null,
-        feet: null,
-        inches: null,
-        age: null
+        weight: '',
+        height: 0,
+        feet: 0,
+        inches: 0,
+        age: '',
+        bodyFat: '',
+        activityLevel: 0
       }
     }
 
     handleChange = prop => event => {
-      this.setState({ [prop]: event.target.value });
+      this.setState({ [prop]: event.target.value }, () => {
+        let newHeight = ((this.state.feet * 12) + parseInt(this.state.inches))
+      this.setState({ height: newHeight});
+      })
     };
     
     handleUnitChange = event => {
@@ -39,9 +48,12 @@ class Form extends Component {
       this.setState({ gender: event.target.value });
     };
 
+    handleActivityChange = event => {
+      this.setState({ activityLevel: event.target.value });
+    };
+
     heightInput() {
       if(this.state.units === 'imperial'){
-        console.log('in imperial')
         return (
           <div className="form-field-bottom">
             <div className="form-height-input">
@@ -75,6 +87,7 @@ class Form extends Component {
   
     render() {
       let jsxHight = this.heightInput();
+      console.log(this.state)
 
       return (
         <div className="Form">
@@ -146,10 +159,39 @@ class Form extends Component {
                   />
                 </div>
               </div>
+            <div className="form-bodyfat form-field">
+              <div className="form-field-title">Body Fat % (optional)</div>
+              <div className="form-field-bottom">
+                <Input
+                  id="adornment-bodyfat"
+                  value={this.state.bodyfat}
+                  onChange={this.handleChange('bodyFat')}
+                  endAdornment={<InputAdornment position="end">Body Fat %</InputAdornment>}
+                  inputProps={{
+                    'aria-label': 'Body Fat',
+                  }}
+                />
+              </div>
+            </div>
             <div className="form-activity form-field">
               <div className="form-field-title">Activity Level</div>
               <div className="form-field-bottom">
-              
+                <FormControl className='form-select'>
+                  <Select
+                    value={this.state.activityLevel}
+                    onChange={this.handleActivityChange}
+                    name='age'
+                    displayEmpty
+                  >
+                    <MenuItem value={0} disabled >Activity Level</MenuItem>
+                    <MenuItem value={1.2}>Sedentary</MenuItem>
+                    <MenuItem value={1.2875}>Low Active</MenuItem>
+                    <MenuItem value={1.375}>Somewhat Active</MenuItem>
+                    <MenuItem value={1.55}>Active</MenuItem>
+                    <MenuItem value={1.7}>Highly Active</MenuItem>
+                    <MenuItem value={1.9}>Extremely Active</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
             </div>
         </div>
