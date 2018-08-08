@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Form.css';
 import { connect } from 'react-redux';
-import {  } from './../../redux/reducer';
+import { updateUserData } from './../../redux/reducer';
 import { withRouter } from 'react-router';
 
 import Radio from '@material-ui/core/Radio';
@@ -9,7 +9,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,9 +23,9 @@ class Form extends Component {
         units: 'imperial',
         gender: 'female',
         weight: '',
-        height: 0,
-        feet: 0,
-        inches: 0,
+        height: '',
+        feet: '',
+        inches: '',
         age: '',
         bodyFat: '',
         activityLevel: 0
@@ -36,21 +35,35 @@ class Form extends Component {
     handleChange = prop => event => {
       this.setState({ [prop]: event.target.value }, () => {
         let newHeight = ((this.state.feet * 12) + parseInt(this.state.inches))
-      this.setState({ height: newHeight});
+        this.setState({ height: newHeight}, () => this.updateUserDataCaller());
       })
     };
     
     handleUnitChange = event => {
-      this.setState({ units: event.target.value });
+      this.setState({ units: event.target.value }, () => this.updateUserDataCaller());
     };
 
     handleGenderChange = event => {
-      this.setState({ gender: event.target.value });
+      this.setState({ gender: event.target.value }, () => this.updateUserDataCaller());
     };
 
     handleActivityChange = event => {
-      this.setState({ activityLevel: event.target.value });
+      this.setState({ activityLevel: event.target.value }, () => this.updateUserDataCaller());
     };
+
+    updateUserDataCaller = () => {
+      updateUserData({
+        units: this.state.units,
+        gender: this.state.gender,
+        weight: this.state.weight,
+        height: this.state.height,
+        feet: this.state.feet,
+        inches: this.state.inches,
+        age: this.state.age,
+        bodyFat: this.state.bodyFat,
+        activityLevel: this.state.activityLevel
+      })
+    }
 
     heightInput() {
       if(this.state.units === 'imperial'){
@@ -87,7 +100,6 @@ class Form extends Component {
   
     render() {
       let jsxHight = this.heightInput();
-      console.log(this.state)
 
       return (
         <div className="Form">
@@ -138,7 +150,7 @@ class Form extends Component {
                   id="adornment-weight"
                   value={this.state.weight}
                   onChange={this.handleChange('weight')}
-                  endAdornment={<InputAdornment position="end">Weight</InputAdornment>}
+                  endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
                   inputProps={{
                     'aria-label': 'Weight',
                   }}
@@ -152,7 +164,7 @@ class Form extends Component {
                     id="adornment-age"
                     value={this.state.age}
                     onChange={this.handleChange('age')}
-                    endAdornment={<InputAdornment position="end">Age</InputAdornment>}
+                    endAdornment={<InputAdornment position="end">Years Old</InputAdornment>}
                     inputProps={{
                       'aria-label': 'Age',
                     }}
@@ -200,9 +212,10 @@ class Form extends Component {
   }
   
   function mapStateToProps(state){
+    console.log(state.user)
     return {
-        
+        user: state.user
     }
   }
   
-export default withRouter(connect(mapStateToProps, { })(Form));
+export default withRouter(connect(mapStateToProps, { updateUserData })(Form));

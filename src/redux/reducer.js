@@ -1,21 +1,31 @@
 const initialState = {
-    user: {},
+    user: {
+        units: 'imperial',
+        gender: 'female',
+        weight: '',
+        height: '',
+        feet: '',
+        inches: '',
+        age: '',
+        bodyFat: '',
+        activityLevel: 0
+    },
     currentPage: 'home'
 }
 
-const GET_USER_DATA = 'GET_USER_DATA'; 
+const UPDATE_USER_DATA = 'UPDATE_USER_DATA'; 
 
 
-export function getUserData(user){
+export function updateUserData(user){
     return {
-        type: GET_USER_DATA,
+        type: UPDATE_USER_DATA,
         payload: user
     }
 }
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case GET_USER_DATA:
+        case UPDATE_USER_DATA:
             return Object.assign({}, state, { user: action.payload });
         default:
             return state;

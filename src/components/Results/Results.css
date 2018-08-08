@@ -1,17 +1,18 @@
-.Form {
-    height: 490px;
+.results {
+    height: 210px;
     width: calc(100% - 2px);
-    border: 1px solid black;
+    border: 1px solid red;
+    border-top: none;
 }
 
-.form-field {
+.results-field {
     height: 70px;
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.form-field-title {
+.results-field-title {
     height: 35px;
     width: 100%;
     font-size: 18px;
@@ -21,19 +22,18 @@
     margin-left: 10px;
 }
 
-.form-field-bottom {
+.results-field-bottom {
     height: 35px;
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    padding-left: 24px;
 }
 
-.form-height-input {
-    width: 35%;
-}
-
-.form-units-radio-group {
+.results-field-bottom-sub {
     height: 100%;
-    width: 100%;
+    width: calc(50% - 12px);
+    display: flex;
+    justify-content: start;
+    align-items: center;
 }
