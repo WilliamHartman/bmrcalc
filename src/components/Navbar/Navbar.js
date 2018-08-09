@@ -5,7 +5,7 @@ import { MdMenu } from 'react-icons/md/index.js';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {  } from './../../redux/reducer';
+import { updateCurrentPage } from './../../redux/reducer';
 import { withRouter } from 'react-router';
 
 
@@ -14,35 +14,17 @@ class Navbar extends Component {
         super(props);
 
         this.state = {
-            open: false,
-            searchTerm: 'Search jobs'
+            open: false
         };
-        this.handleSearchClick = this.handleSearchClick.bind(this);
-        this.checkEnter = this.checkEnter.bind(this);
+        //this.handleNavigate = this.handleNavigate.bind(this);
     }
 
     handleToggle = () => this.setState({open: !this.state.open});
      
     handleClose = () => this.setState({open: false});
 
-    handleSearchClick = () => {
-        this.props.removeSalaries();
-        this.props.updateSalaries(this.state.searchTerm);
-    }
-
-    updateSearchTerm = (e) => {
-        this.setState({searchTerm: e.target.value})      
-    }
-
-    checkEnter = (e) => {
-        if(e.keyCode === 13){
-            this.handleSearchClick();
-            this.props.history.push('/results');
-        }
-    }
-
-    searchBoxClick = () => {
-        this.setState({searchTerm: ''});
+    handleNavigate = (page) => {
+        this.props.updateCurrentPage(page)
     }
 
     render(){
@@ -51,7 +33,7 @@ class Navbar extends Component {
             <div className='navbar-main'>
                 <div className='navbar-top'>
                     <div className='navbar-top-left'>
-                        <Link to='/' className='link'><h1 className='navbar-title'>BMR Calc</h1></Link>
+                        <Link to='/' className='link' onClick={() => this.handleNavigate('home')}><h1 className='navbar-title'>BMR Calc</h1></Link>
                     </div>
                     <div className='navbar-top-right'>
                         <div className='mobile-menu'>
@@ -68,8 +50,8 @@ class Navbar extends Component {
                                 onRequestChange={(open) => this.setState({open})}
                                 containerClassName='drawer'
                                 >
-                                <Link to='/' className='link'><MenuItem onClick={this.handleClose} className='menu-item'>Home</MenuItem></Link>
-                                <Link to='/about' className='link'><MenuItem onClick={this.handleClose} className='menu-item'>About</MenuItem></Link>
+                                <Link to='/' className='link' onClick={() => this.handleNavigate('home')}><MenuItem onClick={this.handleClose} className='menu-item'>Home</MenuItem></Link>
+                                <Link to='/about' className='link' onClick={() => this.handleNavigate('about')}><MenuItem onClick={this.handleClose} className='menu-item'>About</MenuItem></Link>
                             </Drawer>
                         </div>
                         <div className="desktop-menu">
@@ -85,8 +67,8 @@ class Navbar extends Component {
 
 function mapStateToProps(state){
     return {
-        
+        currentPage: state.currentPage
     }
   }
   
-export default withRouter(connect(mapStateToProps, {  })(Navbar));
+export default withRouter(connect(mapStateToProps, { updateCurrentPage })(Navbar));

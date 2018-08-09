@@ -52,7 +52,7 @@ class Form extends Component {
     };
 
     updateUserDataCaller = () => {
-      updateUserData({
+      this.props.updateUserData({
         units: this.state.units,
         gender: this.state.gender,
         weight: this.state.weight,
@@ -212,7 +212,6 @@ class Form extends Component {
   }
   
   function mapStateToProps(state){
-    console.log(state.user)
     return {
         user: state.user
     }
