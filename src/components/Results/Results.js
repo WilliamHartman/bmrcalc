@@ -34,14 +34,30 @@ class Results extends Component {
     kmCalc = () => {
       return 370 + (21.6 * (this.props.user.weight*((100-this.props.user.bodyFat)/100)))
     }
+
+    averageCalc = (hb, rhb, msj, km) => {
+      let avg = (parseInt(hb, 10) + parseInt(rhb, 10) + parseInt(msj, 10)) / 3;
+      if(this.props.user.bodyFat > 0 && this.props.user.bodyFat !== ''){
+        avg = (parseInt(hb, 10) + parseInt(rhb, 10) + parseInt(msj, 10) + parseInt(km, 10)) / 4;
+      }
+      return avg;
+    }
   
     render() {
       let hb = this.hbCalc().toFixed(2);
       let rhb = this.rhbCalc().toFixed(2);
       let msj = this.msjCalc().toFixed(2);
       let km = this.kmCalc().toFixed(2);
+      let average = this.averageCalc(hb, rhb, msj, km).toFixed(2);
       return (
         <div className="results">
+            <div className='results-field'>
+                <div className='results-field-title'>Average</div>
+                <div className='results-field-bottom'>
+                    <div className='results-field-bottom-sub'>BMR: {average}</div>
+                    <div className='results-field-bottom-sub'>TDEE: {(average*this.props.user.activityLevel).toFixed(2)}</div>
+                </div>
+            </div>
             <div className='results-field'>
                 <div className='results-field-title'>Harris-Benedict</div>
                 <div className='results-field-bottom'>

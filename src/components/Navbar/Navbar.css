@@ -53,17 +53,17 @@
 }
 
 .navbar-menu-home {
-    color: #85bb65;
+    color: #ffffffe7;
 }
 
 .navbar-menu-about {
-    color: #ffcb00;
+    color: #ffffffe7;
 }
 
 
 @media (min-width: 800px) {
     .navbar-main {
-        height: 160px;
+        height: 70px;
     }
 
     .navbar-top {
@@ -82,9 +82,8 @@
     }
 
     .navbar-title {
-        font-size: 45px;
-        color: #85bb65;
-        margin: 7px 0px 0px 7px;
+        font-size: 42px;
+        margin: 12px 0px 0px 7px;
     }
 
     .mobile-menu {

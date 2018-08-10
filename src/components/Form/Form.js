@@ -34,7 +34,10 @@ class Form extends Component {
 
     handleChange = prop => event => {
       this.setState({ [prop]: event.target.value }, () => {
-        let newHeight = ((this.state.feet * 12) + parseInt(this.state.inches))
+        let newHeight = this.state.feet * 12;
+        if(this.state.inches !== ''){
+          newHeight = ((this.state.feet * 12) + parseInt(this.state.inches, 10))
+        }
         this.setState({ height: newHeight}, () => this.updateUserDataCaller());
       })
     };

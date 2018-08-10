@@ -9,7 +9,9 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <div className = 'router-container'>
-          {router}
+          <div className='router-sub-container'>
+            {router}
+          </div>
         </div>
       </div>
     );
