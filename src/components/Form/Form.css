@@ -37,3 +37,8 @@
     height: 100%;
     width: 100%;
 }
+
+.form-field-mdhelp {
+    margin-left: 5px;
+    margin-top: 3px;
+}

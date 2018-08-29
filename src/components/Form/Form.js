@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Form.css';
 import { connect } from 'react-redux';
-import { updateUserData } from './../../redux/reducer';
+import { updateUserData, updateCurrentPage } from './../../redux/reducer';
 import { withRouter } from 'react-router';
 
 import Radio from '@material-ui/core/Radio';
@@ -12,6 +12,17 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { MdHelp } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+
 
 //https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4428382/
 
@@ -20,6 +31,7 @@ class Form extends Component {
       super();
       
       this.state = {
+        open: false,
         units: 'imperial',
         gender: 'female',
         weight: '',
@@ -100,6 +112,18 @@ class Form extends Component {
         )
       }
     }
+
+    handleClickOpen = () => {
+      this.setState({ open: true });
+    };
+  
+    handleClose = () => {
+      this.setState({ open: false });
+    };
+
+    handleNavigate = (page) => {
+      this.props.updateCurrentPage(page)
+    }
   
     render() {
       let jsxHight = this.heightInput();
@@ -175,7 +199,9 @@ class Form extends Component {
                 </div>
               </div>
             <div className="form-bodyfat form-field">
-              <div className="form-field-title">Body Fat % (optional)</div>
+              <div className="form-field-title">Body Fat % (optional) 
+                <div className="form-field-mdhelp" onClick={this.handleClickOpen}><MdHelp /></div>
+              </div>
               <div className="form-field-bottom">
                 <Input
                   id="adornment-bodyfat"
@@ -209,6 +235,34 @@ class Form extends Component {
                 </FormControl>
               </div>
             </div>
+            <Dialog
+              open={this.state.open}
+              onClose={this.handleClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Body Fat Percentage can be measured in many different ways. The most accurate being DXA scan followed by, 
+                  hyrdrostatic testing, and air displacement (like BodPod). Less accurate are bioelectrical impedance 
+                  (such as scales that can measure body fat) and skin caliper measurements. 
+                </DialogContentText>
+                <DialogContentText>
+                  If you don't have access to any of the above, a new formula called Relative Fat Mass (RFM) can estimate 
+                  your body fat percentage relatively accurately. To calculate your RFM, click below.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Link to='/RFM' className='link' onClick={() => this.handleNavigate('RFM')}>
+                  <Button onClick={this.handleClose} color="primary">
+                    Calculate RFM
+                  </Button>
+                </Link>
+                <Button onClick={this.handleClose} color="primary" autoFocus>
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
         </div>
       );
     }
@@ -220,4 +274,4 @@ class Form extends Component {
     }
   }
   
-export default withRouter(connect(mapStateToProps, { updateUserData })(Form));
+export default withRouter(connect(mapStateToProps, { updateUserData, updateCurrentPage })(Form));

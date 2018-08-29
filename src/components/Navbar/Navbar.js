@@ -51,11 +51,13 @@ class Navbar extends Component {
                                 containerClassName='drawer'
                                 >
                                 <Link to='/' className='link' onClick={() => this.handleNavigate('home')}><MenuItem onClick={this.handleClose} className='menu-item'>Home</MenuItem></Link>
+                                <Link to='/RFM' className='link' onClick={() => this.handleNavigate('RFM')}><MenuItem onClick={this.handleClose} className='menu-item'>RFM</MenuItem></Link>
                                 <Link to='/about' className='link' onClick={() => this.handleNavigate('about')}><MenuItem onClick={this.handleClose} className='menu-item'>About</MenuItem></Link>
                             </Drawer>
                         </div>
                         <div className="desktop-menu">
                             <Link to='/' className='link'><div className='navbar-menu-home'>Home</div></Link>
+                            <Link to='/RFM' className='link'><div className='navbar-menu-RFM'>RFM</div></Link>
                             <Link to='/about' className='link'><div className='navbar-menu-about'>About</div></Link>
                         </div>
                     </div>
